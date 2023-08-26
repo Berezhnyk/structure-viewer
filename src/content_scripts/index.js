@@ -2,30 +2,42 @@ let accumulatedData = "";
 let updatingContent = false;
 let formattedJsonContainer;
 
+const formattedJsonContainerId = "formattedJsonContainer";
+const originalContainerClassName = "originalJsonContainer";
+
 const observer = new MutationObserver((mutations) => {
     for (const mutation of mutations) {
         
         if (mutation.addedNodes && mutation.addedNodes.length > 0) {
             for (const addedNode of mutation.addedNodes) {
-                if (addedNode.nodeName === "PRE" && addedNode.id !== 'formattedJsonContainer') {
-                    addedNode.style.display = 'none';
+                if (addedNode.nodeName === "PRE") {
+                    if(addedNode.id !== formattedJsonContainerId) {
+                        if (!addedNode.classList.contains(originalContainerClassName)) {
+                            addedNode.classList.add(originalContainerClassName);
+                        }
+                        updatingContent = true;
+                        addedNode.style.display = 'none';
+                        updatingContent = false;
+                    } 
                 }
             }
         }
 
-        if (mutation.type === 'characterData' && !updatingContent) {
+        if ((mutation.type === 'characterData' || mutation.type === 'childList') && !updatingContent) {
             let node = mutation.target;
-            accumulatedData = node.nodeValue;
-
+            accumulatedData = node.nodeValue || node.innerText || node.textContent || "";
+            if (!accumulatedData) {
+                continue;
+            }
             try {
-                accumulatedData = makeSureItIsJson(accumulatedData);
+                accumulatedData = makeSureItIsJson(accumulatedData.trim());
                 const jsonData = JSON.parse(accumulatedData);
                 const formattedData = formatJSON(jsonData);
 
                 // If the formattedJsonContainer with the specific ID doesn't exist yet, create it
                 if (!formattedJsonContainer) {
                     formattedJsonContainer = document.createElement('pre');
-                    formattedJsonContainer.id = 'formattedJsonContainer';
+                    formattedJsonContainer.id = formattedJsonContainerId;
                     // Insert the new container at the beginning of the body
                     document.body.insertBefore(formattedJsonContainer, document.body.firstChild);
                 }
@@ -35,11 +47,22 @@ const observer = new MutationObserver((mutations) => {
                 accumulatedData = "";
 
             } catch (e) {
-                console.error("Current content is not valid JSON. Waiting for more data.");
+                handleParsingIssue()
             }
         }
     }
 });
+
+function handleParsingIssue() {
+    console.error("Current content is not valid JSON; stopping formatting.");
+    observer.disconnect();
+    const originalJsonContainer = document.querySelector(`.${originalContainerClassName}`);
+    const formattedJsonContainer = document.querySelector(`#${formattedJsonContainerId}`);
+    if (originalJsonContainer && formattedJsonContainer) {
+        originalJsonContainer.style.display = 'block';
+        formattedJsonContainer.style.display = 'none';
+    }
+}
 
 function makeSureItIsJson(data) {
     if (data.length === 0) {

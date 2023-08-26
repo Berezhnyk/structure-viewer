@@ -3,12 +3,8 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
 	entry: {
-	  "background": ["./src/background/index.js"],
-	  "content_scripts": ["./src/content_scripts/index.js"],
-	  "options": ["./src/options/scripts/index.js", "./src/options/styles/options.scss"],
-	  "popup": ["./src/popup/scripts/index.js", "./src/popup/styles/popup.scss"],
-	  "newtab": ["./src/newtab/scripts/index.js", "./src/newtab/styles/newtab.scss"],
-	},
+	  "content_scripts": ["./src/content_scripts/index.js"]
+  },
 	output: {
 		path: path.resolve(__dirname, "dist"),
 		filename: "[name].js",
@@ -56,9 +52,6 @@ module.exports = {
 		new CopyWebpackPlugin({
 		patterns: [
 			{ from: "./src/manifest.json" },
-			{ from: "./src/options/options.html" },
-			{ from: "./src/popup/popup.html" },
-			{ from: "./src/newtab/newtab.html" },
 			{ from: "icons/*", to: path.resolve(__dirname, "dist"), context: "src/" }
 		]
 		}),
