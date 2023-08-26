@@ -18,7 +18,7 @@ This Chrome extension enhances your browsing experience by providing on-the-fly 
 
 1. Clone the repository:
 ```bash
-git clone [REPOSITORY_URL]
+git clone https://github.com/Berezhnyk/structure-viewer.git
 ```
 2. Navigate to `chrome://extensions/` in your Chrome browser.
 
@@ -38,7 +38,7 @@ I welcome contributions to this project! Whether it's adding support for more st
 
 ## Feedback & Issues
 
-If you come across any bugs or have suggestions for improvement, please open an issue in the repository. I would love to hear your feedback!
+If you encounter any bugs or have suggestions for improvement, please open an issue in the repository. I would love to hear your feedback!
 
 ## License
 
