@@ -1,3 +1,5 @@
+import { formatJSON, makeSureItIsJson } from './utils';
+
 let accumulatedData = "";
 let updatingContent = false;
 let formattedJsonContainer;
@@ -62,22 +64,6 @@ function handleParsingIssue() {
         originalJsonContainer.style.display = 'block';
         formattedJsonContainer.style.display = 'none';
     }
-}
-
-function makeSureItIsJson(data) {
-    if (data.length === 0) {
-        return data;
-    }
-    if (data[0] === "{" && data[data.length - 1] !== "}") {
-        data += "}";
-    } else if (data[0] === "[" && data[data.length - 1] !== "]") {
-        data += "]";
-    }
-    return data;
-}
-
-function formatJSON(data) {
-    return JSON.stringify(data, null, 2);
 }
 
 if (document.contentType === "application/json") {
