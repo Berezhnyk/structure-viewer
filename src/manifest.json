@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "Stuctured data types viewer (Json, XML, CSV, YAML:, etc.)",
+    "name": "Stuctured data types viewer",
     "description": "Chrome extension for viewing stuctured data types, such as Json, XML, CSV, YAML, etc.",
     "version": "0.0.1",
     "author": "Ivan Berezhnyk",
