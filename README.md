@@ -1,8 +1,10 @@
-# Chrome extension for viewing stuctured data types
+# Chrome extension for viewing structured data types
 ## Roadmap 
 - JSON (+)
 - CSV (-)
+- YAML (-)
 - XML (-)
+
 
 This Chrome extension enhances your browsing experience by providing on-the-fly JSON formatting for HTTP stream responses. If you frequently work with APIs that send JSON data as streamed responses, this extension will prove to be a valuable tool for you.
 
